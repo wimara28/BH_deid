@@ -10,3 +10,8 @@ SNUBH de-identification of clinical note project.
   - Execute `selecte * from {dict_name}` and File-Save results.
 - This data preprocessed to use easily by `refine_rawdict.ipynb`
 - The result file is `dict_eng.csv` and `dict_abb.csv`.
+
+### Blacklist
+- Name
+  - Crwal Korean name information from https://koreanname.me/
+
