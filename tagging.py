@@ -10,12 +10,14 @@ parser = argparse.ArgumentParser(description='Select how to de-identify informat
 parser.add_argument('--input', '-i', default='phis.csv')  # notes
 parser.add_argument('--regex', '-r', default='filters/regex/')  # regular expressions
 parser.add_argument('--output', '-o', default='output/tagging_phis.csv')
+parser.add_argument('--asterisk', '-a', default=False)
 
 args = parser.parse_args()
 
 inputNote = args.input
 regex = args.regex
 output = args.output
+asterisk = args.asterisk
 
 dat = pd.read_csv(inputNote, encoding='utf-8')
 
@@ -71,12 +73,17 @@ def tagging(notes_raw, regex_dir):
         phis_span_dict = collections.defaultdict(list)
         raw_span = find_span(phis_span_dict, notes_raw, patterns)
 
-        for phis in raw_span.items():
-            for spans in phis[1]:
-                notes_raw[phis[0]] = notes_raw[phis[0]][:spans[0]] + '$' * (spans[1] - spans[0]) + notes_raw[phis[0]][spans[1]:]
-            notes_raw[phis[0]] = re.sub('\${1,}', fr'==[PHI: {key.upper()}]==', notes_raw[phis[0]])
+        if asterisk:
+            for phis in raw_span.items():
+                for spans in phis[1]:
+                    notes_raw[phis[0]] = notes_raw[phis[0]][:spans[0]] + '*' * (spans[1] - spans[0]) + notes_raw[phis[0]][spans[1]:]
+        else:
+            for phis in raw_span.items():
+                for spans in phis[1]:
+                    notes_raw[phis[0]] = notes_raw[phis[0]][:spans[0]] + '$' * (spans[1] - spans[0]) + notes_raw[phis[0]][spans[1]:]
+                notes_raw[phis[0]] = re.sub('\${1,}', fr'==[PHI: {key.upper()}]==', notes_raw[phis[0]])
 
-        print(f'{key} Done')
+        print(f'>>> {key.upper()} Done')
 
     return notes_raw
 
