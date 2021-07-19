@@ -16,7 +16,7 @@ SNUBH de-identification of clinical note project.
   - Crwal Korean name information from https://koreanname.me/
 
 
-## 2021-05  changed
+## 2021-05 Methods changed
 - Instead of considering all whitelist/blacklist, constructing regular expression to catch PHI patterns.
 - `tagging.py` uses regular expression to de-identifying clinical notes with several pre-defined regex patterns.
 
