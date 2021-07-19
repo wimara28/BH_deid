@@ -15,3 +15,15 @@ SNUBH de-identification of clinical note project.
 - Name
   - Crwal Korean name information from https://koreanname.me/
 
+
+## 2021-05 Goal changed
+- Instead of considering all whitelist/blacklist, constructing regular expression to catch PHI patterns.
+- `tagging.py` uses regular expression to de-identifying clinical notes with several pre-defined regex patterns.
+
+### Tagging.py
+- This file needs some environments.
+1. Clinical notes `csv` file with column name 'NOTE_ID' and 'note_text'.
+2. Pre-defined regular expression folders with form of `regex/{PHI category}/{regular expression txt files corresponding the category`.
+  for example, `regex/dates/YYYY-MM-DD.txt` or `regex/hospitals/hospital_kor.txt`.
+3. Before run, regex files must be transformed by `regex/transform_regex.py`. Only `_transformed.txt` files could be read to catch patterns.
+4. To save output, create `output/` folder.
