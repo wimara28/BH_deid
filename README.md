@@ -24,6 +24,7 @@ SNUBH de-identification of clinical note project.
 - This file needs some environments.
 1. Clinical notes `csv` file with column name 'NOTE_ID' and 'note_text'.
 2. Pre-defined regular expression folders with form of `regex/{PHI category}/{regular expression txt files corresponding the category`.
-  for example, `regex/dates/YYYY-MM-DD.txt` or `regex/hospitals/hospital_kor.txt`.
+  For example, `regex/dates/YYYY-MM-DD.txt` or `regex/hospitals/hospital_kor.txt`.
 3. Before run, regex files must be transformed by `regex/transform_regex.py`. Only `_transformed.txt` files could be read to catch patterns.
 4. To save output, create `output/` folder.
+5. If you want asterisk(`*`) results, add `--asterisk` or `-a` args. 
