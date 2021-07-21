@@ -25,4 +25,11 @@ print(f"{s1} ====> {re.sub(p, convert_pname, s1)}")
 print(f"{s2} ====> {re.sub(p, convert_pname, s2)}")
 print(f"{s3} ====> {re.sub(p, convert_pname, s3)}")
 print(f"{s4} ====> {re.sub(p, convert_pname, s4)}")
+"""
+output:
+환자이름 : 홍길동 ====> 'O','O','PER-B'
+환자 이름: 홍길동 ====> 'O','O','PER-B'
+환자이름:홍길동 ====> 'PER-B'
+환자 이름 ;홍길동 ====> 'O','O','PER-B'
+"""
 
