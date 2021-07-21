@@ -5,12 +5,12 @@ p1 = '\d{4}\s?[-]\s?\d{2}\s?[-]\s?\d{2}'
 
 matches = re.findall(p, s)
 
-def convert_test(matchObj):
+def convert_date(matchObj):
 
     match = matchObj.group()
-    real = 'DATE-B ' + 'DATE-I ' * (len(match.split())-1)
+    resultString = 'DATE-B ' + 'DATE-I ' * (len(match.split())-1)
 
-    return real
+    return resultString
 
 print(re.sub(p1, convert_test, s1) + '\n')
 """
