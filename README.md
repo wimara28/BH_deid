@@ -35,5 +35,7 @@ SNUBH de-identification of clinical note project.
 - `PHI_Hopital.ipynb` is the actual example applying checkPHI.py
 
 ## 2021-08 Labeling to apply KoBERT-NER
-- (KoBERT-NER)[https://github.com/monologg/KoBERT-NER]
-- `labeling/*`
+- [KoBERT-NER](https://github.com/monologg/KoBERT-NER)
+- `labeling/*` file contains labeling code in stages.
+- To cover different context expressions such as `판독의` `from` etc, make corresponding formula step by step.
+- Not for automation but for checking.
