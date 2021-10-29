@@ -35,4 +35,5 @@ SNUBH de-identification of clinical note project.
 - `PHI_Hopital.ipynb` is the actual example applying checkPHI.py
 
 ## 2021-08 Labeling to apply KoBERT-NER
+- (KoBERT-NER)[https://github.com/monologg/KoBERT-NER]
 - `labeling/*`
