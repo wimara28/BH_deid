@@ -28,3 +28,7 @@ SNUBH de-identification of clinical note project.
 3. Before run, regex files must be transformed by `regex/transform_regex.py`. Only `_transformed.txt` files could be read to catch patterns.
 4. To save output, create `output/` folder.
 5. If you want asterisk(`*`) results, add `--asterisk` or `-a` args. 
+
+### checkPHI.py & regex/
+- Check regex set and csv file with ['note_id'] ['note_text'] PHI_columns e.g. ['날짜'] ['의료진이름'] ['환자이름']
+- Sample code to detect simple type 1 and type 2 errors.
