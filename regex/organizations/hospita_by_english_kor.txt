@@ -1,0 +1,1 @@
+([A-Z][a-z]{1,}\s){1,}(Hosp|Hospital)
