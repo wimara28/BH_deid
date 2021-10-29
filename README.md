@@ -33,3 +33,6 @@ SNUBH de-identification of clinical note project.
 - Check regex set and csv file with ['note_id'] ['note_text'] PHI_columns e.g. ['날짜'] ['의료진이름'] ['환자이름']
 - Sample code to detect simple type 1 and type 2 errors.
 - `PHI_Hopital.ipynb` is the actual example applying checkPHI.py
+
+## 2021-08 Labeling to apply KoBERT-NER
+- `labeling/*`
