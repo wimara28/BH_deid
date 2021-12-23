@@ -1,6 +1,6 @@
 # BH_deid
-SNUBH de-identification of clinical note project.
-Summarize notion [link](https://knotty-cent-563.notion.site/SNUBH-f9d3bcbf89a7403fb9cdc21f23298808) (Kor)
+- SNUBH de-identification of clinical note project.
+- Summarized notion [link](https://knotty-cent-563.notion.site/SNUBH-f9d3bcbf89a7403fb9cdc21f23298808) (Kor)
 
 ### Whitelist
 - Whitelist of clinical terms referenced by http://www.kmle.co.kr/kmle_cdict_1_1_download.php
