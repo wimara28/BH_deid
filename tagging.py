@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 import os
 import argparse
 
@@ -5,11 +6,17 @@ import pandas as pd
 import collections
 import re
 import copy
+"""
+의료노트를 regular expression rules 를 적용한 비식별 완료 형식으로 변환하는 코드
+Input 형식 : NOTE_ID / NOTE_TEXT 열이 존재하는 csv 파일
+Output 형식 : idx(=NOTE_ID) / origin / transformed 열이 존재하는 csv 파일
+기본적으로 ===[PHI: category]=== 형식으로 output을 내지만, -a 를 통해 asterisk(*) 형식으로 결과를 낼 수 있음
+"""
 
 parser = argparse.ArgumentParser(description='Select how to de-identify information')
-parser.add_argument('--input', '-i', default='phis.csv')  # notes
-parser.add_argument('--regex', '-r', default='filters/regex/')  # regular expressions
-parser.add_argument('--output', '-o', default='output/tagging_phis.csv')
+parser.add_argument('--input', '-i', default='data/tagging_input.csv')  # notes
+parser.add_argument('--regex', '-r', default='regex/')  # regular expression rules set
+parser.add_argument('--output', '-o', default='data/tagging_output.csv') # path to save the results
 parser.add_argument('--asterisk', '-a', default=False)
 
 args = parser.parse_args()
@@ -23,10 +30,14 @@ dat = pd.read_csv(inputNote, encoding='utf-8')
 
 
 def load_notes(pd_data):
+    """
+    :param pd_data: input note
+    :return: idx(NOTE_ID) & note(NOTE_TEXT) set in the form of dictionary,
+    / return for processing(notes_raw) and saving(origins_raw)
+    """
     notes_raw = {}
-
     for i in range(len(pd_data)):
-        notes_raw[pd_data['NOTE_ID'][i]] = pd_data['note_text'][i]
+        notes_raw[pd_data['NOTE_ID'][i]] = pd_data['NOTE_TEXT'][i]
 
     origins_raw = copy.deepcopy(notes_raw)
 
@@ -34,6 +45,12 @@ def load_notes(pd_data):
 
 
 def load_regex(regex_path):
+    """
+    :param regex_path: path where the regular expression rules set is stored.
+    This path should contain sub-folders separated by each regular expression category
+    ex) regex/date, regex/name, ...
+    :return: Dict of {specific file name : the path of it}
+    """
     regex_dir = {}
 
     for file in os.listdir(regex_path):
@@ -46,7 +63,12 @@ def load_regex(regex_path):
     return regex_dir
 
 
-def find_span(span_dict, note_dict, patterns):
+def find_span(note_dict, patterns):
+    """
+    Find span with patterns stored in regular expression rules
+    :return: {index with notes containing pattern : span of it}
+    """
+    span_dict = collections.defaultdict(list)
     for n in note_dict.items():
         note_idx = n[0]
         note = n[1]
@@ -67,11 +89,10 @@ def tagging(notes_raw, regex_dir):
 
         for files in os.listdir(i):
             if files.endswith('_transformed.txt'):
-                with open(i + files) as r:
+                with open(i + files, encoding='utf-8') as r:
                     patterns.append(re.compile(r.readline()))
 
-        phis_span_dict = collections.defaultdict(list)
-        raw_span = find_span(phis_span_dict, notes_raw, patterns)
+        raw_span = find_span(notes_raw, patterns)
 
         if asterisk:
             for phis in raw_span.items():
@@ -105,12 +126,15 @@ def print_output(notes_tra, origins):
     else:
         print('Not same notes')
 
-    transformed.to_csv(output, index=False)
+
+    if os.path.exists(output):
+        os.remove(output)
+    transformed.to_csv(output, index=False, encoding='utf-8-sig')
 
 
 if __name__ == '__main__':
     notes, save_origins = load_notes(dat)
     regex_all = load_regex(regex)
-    regexDir = collections.OrderedDict(sorted(regex_all.items()))
+    regexDir = collections.OrderedDict(sorted(regex_all.items())) # Apply regex sequentially by category to control the order
     notes_transformed = tagging(notes, regexDir)
     print_output(notes_transformed, save_origins)
