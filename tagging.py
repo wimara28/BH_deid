@@ -13,22 +13,6 @@ Output 형식 : idx(=NOTE_ID) / origin / transformed 열이 존재하는 csv 파
 기본적으로 ===[PHI: category]=== 형식으로 output을 내지만, -a 를 통해 asterisk(*) 형식으로 결과를 낼 수 있음
 """
 
-parser = argparse.ArgumentParser(description='Select how to de-identify information')
-parser.add_argument('--input', '-i', default='data/tagging_input.csv')  # notes
-parser.add_argument('--regex', '-r', default='regex/')  # regular expression rules set
-parser.add_argument('--output', '-o', default='data/tagging_output.csv') # path to save the results
-parser.add_argument('--asterisk', '-a', default=False)
-
-args = parser.parse_args()
-
-inputNote = args.input
-regex = args.regex
-output = args.output
-asterisk = args.asterisk
-
-dat = pd.read_csv(inputNote, encoding='utf-8')
-
-
 def load_notes(pd_data):
     """
     :param pd_data: input note
@@ -133,6 +117,23 @@ def print_output(notes_tra, origins):
 
 
 if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser(description='Select how to de-identify information')
+    parser.add_argument('--input', '-i', default='data/tagging_input.csv')  # notes
+    parser.add_argument('--regex', '-r', default='regex/')  # regular expression rules set
+    parser.add_argument('--output', '-o', default='data/tagging_output.csv')  # path to save the results
+    parser.add_argument('--asterisk', '-a', default=False)
+
+    args = parser.parse_args()
+
+    inputNote = args.input
+    regex = args.regex
+    output = args.output
+    asterisk = args.asterisk
+
+    dat = pd.read_csv(inputNote, encoding='utf-8')
+
+
     notes, save_origins = load_notes(dat)
     regex_all = load_regex(regex)
     regexDir = collections.OrderedDict(sorted(regex_all.items())) # Apply regex sequentially by category to control the order
